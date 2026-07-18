@@ -14,13 +14,14 @@ Requisitos: cuentas gratis en **Supabase** y **Vercel** (GitHub ya está).
    - `Project URL` → será `NEXT_PUBLIC_SUPABASE_URL`
    - `anon public` key → será `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 3. Aplica el **esquema** (elige una):
-   - **CLI (recomendado):**
+   - **Más fácil (sin CLI):** abre `supabase/prod-schema.sql`, copia TODO, pégalo en
+     **SQL Editor** del dashboard de Supabase y dale **Run**. Es un solo archivo que
+     crea todo (tablas, RLS, buckets, categorías). No incluye el seed local.
+   - **CLI (si prefieres):**
      ```bash
      supabase link --project-ref TU_PROJECT_REF
      supabase db push            # aplica supabase/migrations/*
      ```
-   - **Manual:** pega el contenido de `supabase/migrations/20260717000000_init.sql`
-     en el **SQL Editor** del dashboard y ejecútalo.
 4. **NO corras `supabase/seed.sql` en producción** — ese seed es solo para local
    (crea un usuario admin falso y posts demo). En prod:
    - Entra al sitio y haz login con tu correo (magic link).

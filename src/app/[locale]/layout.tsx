@@ -19,6 +19,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale });
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
     title: `${t("site.name")} — ${t("site.tagline")}`,
     description: t("home.heroLead"),
   };

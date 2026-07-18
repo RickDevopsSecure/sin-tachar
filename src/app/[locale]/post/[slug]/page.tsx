@@ -1,12 +1,45 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { categoryName } from "@/lib/categories";
+import CompartirPost from "@/components/CompartirPost";
 import { pick, type Locale, type Post } from "@/lib/types";
 
 const ALARM = new Set(["derechos-humanos", "injusticia"]);
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("posts")
+    .select("title_es, title_en, excerpt_es, excerpt_en")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
+  if (!data) return {};
+  const post = data as Post;
+  const title = pick(post, "title", locale);
+  const description = pick(post, "excerpt", locale);
+  const image = `/api/share/${locale}/${slug}`;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      images: [{ url: image, width: 1080, height: 1350 }],
+    },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
+  };
+}
 
 export default async function PostPage({
   params,
@@ -84,6 +117,8 @@ export default async function PostPage({
             <p key={i}>{p}</p>
           ))}
         </div>
+
+        <CompartirPost slug={post.slug} locale={locale} title={title} />
       </article>
     </div>
   );

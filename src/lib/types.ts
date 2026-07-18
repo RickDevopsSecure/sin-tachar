@@ -19,6 +19,31 @@ export interface Post {
   profiles?: { display_name: string | null } | null;
 }
 
+export interface TemplateField {
+  name: string;
+  label: string;
+  type: "text" | "textarea" | "date" | "email" | "number" | "tel";
+  required?: boolean;
+  placeholder?: string;
+}
+
+export interface Template {
+  id: string;
+  author_id: string;
+  category_slug: string;
+  locale: string;
+  title: string;
+  description: string | null;
+  disclaimer: string | null;
+  fields: TemplateField[];
+  reference_pdf_path: string | null;
+  status: "pending" | "approved" | "rejected";
+  reviewed_at: string | null;
+  uses_count: number;
+  created_at: string;
+  profiles?: { display_name: string | null } | null;
+}
+
 export type Locale = "es" | "en";
 
 /** Devuelve el campo del idioma pedido, con fallback al otro. */

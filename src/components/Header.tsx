@@ -39,6 +39,9 @@ export default async function Header() {
         </Link>
 
         <nav className="flex items-center gap-5">
+          <Link href="/formatos" className="meta text-muted transition-colors hover:text-text">
+            {t("nav.formatos")}
+          </Link>
           {user && (
             <Link href="/submit" className="meta text-muted transition-colors hover:text-text">
               {t("nav.submit")}

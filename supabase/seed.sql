@@ -75,3 +75,26 @@ values
    E'Documentar, denunciar y acompañar requiere herramientas. Aquí compartimos formatos listos para usar: cartas, quejas, solicitudes de información.\n\nLa defensa de derechos no debería depender de tener un abogado a la mano.',
    E'Documenting, reporting, and accompanying requires tools. Here we share ready-to-use templates: letters, complaints, information requests.\n\nRights defense should not depend on having a lawyer on hand.',
    'https://picsum.photos/seed/resonar-derechos/1200/950', 'published', now() - interval '8 hour');
+
+-- Formatos demo (aprobados)
+insert into public.templates
+  (author_id, category_slug, locale, title, description, disclaimer, fields, status, reviewed_by, reviewed_at)
+values
+  ('11111111-1111-1111-1111-111111111111', 'injusticia', 'es',
+   'Carta de queja laboral',
+   'Documenta un despido o abuso laboral para presentarlo ante la autoridad.',
+   'Este formato es orientativo y no sustituye asesoría jurídica profesional.',
+   '[{"name":"nombre_completo","label":"Nombre completo","type":"text","required":true,"placeholder":"Tu nombre"},
+     {"name":"empresa","label":"Empresa o empleador","type":"text","required":true,"placeholder":""},
+     {"name":"fecha_incidente","label":"Fecha del incidente","type":"date","required":true,"placeholder":""},
+     {"name":"descripcion","label":"Descripción de los hechos","type":"textarea","required":true,"placeholder":"Qué pasó, cuándo y quiénes"}]'::jsonb,
+   'approved', '11111111-1111-1111-1111-111111111111', now()),
+
+  ('11111111-1111-1111-1111-111111111111', 'derechos-humanos', 'es',
+   'Solicitud de acceso a la información',
+   'Pide información pública a una dependencia de gobierno.',
+   'Formato orientativo; verifica los requisitos de tu entidad.',
+   '[{"name":"nombre_completo","label":"Nombre completo","type":"text","required":true,"placeholder":"Tu nombre"},
+     {"name":"dependencia","label":"Dependencia a la que solicitas","type":"text","required":true,"placeholder":""},
+     {"name":"informacion_solicitada","label":"Información que solicitas","type":"textarea","required":true,"placeholder":"Describe con claridad"}]'::jsonb,
+   'approved', '11111111-1111-1111-1111-111111111111', now());

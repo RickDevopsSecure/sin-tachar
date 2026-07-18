@@ -39,7 +39,8 @@ Requisitos: cuentas gratis en **Supabase** y **Vercel** (GitHub ya está).
    | Variable | Valor |
    |---|---|
    | `NEXT_PUBLIC_SUPABASE_URL` | `https://TU-PROYECTO.supabase.co` |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | tu anon key |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | tu anon key (pública) |
+   | `SUPABASE_SERVICE_ROLE_KEY` | tu service-role key (**secreta, solo servidor** — para URLs firmadas de PDFs y borrado en moderación) |
    | `NEXT_PUBLIC_SITE_URL` | `https://sin-tachar.vercel.app` |
 4. **Deploy**. Te da la URL `https://sin-tachar.vercel.app`.
 

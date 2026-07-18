@@ -1,0 +1,59 @@
+{
+  "site": {
+    "name": "Sin Tachar",
+    "tagline": "Lo que debe compartirse"
+  },
+  "nav": {
+    "home": "Inicio",
+    "submit": "Publicar",
+    "moderation": "Moderación",
+    "login": "Entrar",
+    "logout": "Salir"
+  },
+  "home": {
+    "heroLead": "Un espacio libre para dar visibilidad a los derechos humanos, la injusticia social, el arte, la música y la IA segura. Lo que borraron, aquí se destapa.",
+    "all": "Todo",
+    "latest": "Lo más reciente",
+    "empty": "Todavía no hay publicaciones en esta categoría.",
+    "readMore": "Leer"
+  },
+  "post": {
+    "by": "Por",
+    "back": "← Volver",
+    "notFound": "Publicación no encontrada"
+  },
+  "submit": {
+    "title": "Comparte una historia",
+    "intro": "Tu propuesta pasa por revisión antes de publicarse.",
+    "mustLogin": "Necesitas iniciar sesión para publicar.",
+    "category": "Categoría",
+    "coverUrl": "URL de imagen de portada",
+    "titleEs": "Título (español)",
+    "titleEn": "Título (inglés)",
+    "excerptEs": "Resumen (español)",
+    "excerptEn": "Resumen (inglés)",
+    "bodyEs": "Texto (español)",
+    "bodyEn": "Texto (inglés)",
+    "optional": "opcional",
+    "send": "Enviar a revisión",
+    "success": "¡Recibido! Tu propuesta está en revisión.",
+    "sendAnother": "Enviar otra"
+  },
+  "moderation": {
+    "title": "Cola de moderación",
+    "empty": "No hay nada pendiente. Todo al día.",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "pending": "pendientes",
+    "staffOnly": "Solo para editores."
+  },
+  "login": {
+    "title": "Entrar",
+    "intro": "Te enviamos un enlace mágico. Sin contraseñas.",
+    "email": "Tu correo",
+    "send": "Enviar enlace",
+    "sent": "Revisa tu correo. Te enviamos un enlace para entrar.",
+    "devHint": "En local, abre el buzón:",
+    "error": "No se pudo enviar el enlace. Intenta de nuevo."
+  }
+}

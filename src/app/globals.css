@@ -1,26 +1,236 @@
 @import "tailwindcss";
 
+/* ════════════════════════════════════════════════════════════
+   SIN TACHAR — sistema visual "expediente desclasificado"
+   Cromo oscuro (archivador) + papel cálido con tinta (contenido).
+   Un solo color de marca: rojo-sello. Concepto: el lector desclasifica.
+   ════════════════════════════════════════════════════════════ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Chrome — el archivador */
+  --bg: #0b0a0c;
+  --surface: #141216;
+  --surface-2: #1e1b22;
+  --border: #2a2730;
+  --text: #ede9e4;
+  --muted: #a7a0ad;
+
+  /* Papel — lo desclasificado */
+  --paper: #e8e0ce;
+  --paper-shade: #d7cbb2;
+  --ink: #16130e;
+  --ink-muted: #4a443a;
+
+  /* Único color de marca */
+  --seal: #b5352a;
+  --seal-bright: #e4573d;
+
+  --font-display: var(--font-redaction), "Times New Roman", Georgia, serif;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-type: var(--font-courier), "Courier New", ui-monospace, monospace;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-paper: var(--paper);
+  --color-paper-shade: var(--paper-shade);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-seal: var(--seal);
+  --color-seal-bright: var(--seal-bright);
+
+  --font-display: var(--font-redaction), "Times New Roman", Georgia, serif;
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-type: var(--font-courier), "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
-
+html {
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  line-height: 1.6;
+}
+::selection {
+  background: var(--seal);
+  color: #fff;
+}
+:focus-visible {
+  outline: 2px solid var(--seal-bright);
+  outline-offset: 3px;
+}
+
+/* ── Tipografía base ───────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-type { font-family: var(--font-type); }
+
+.kicker {
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--seal);
+}
+.meta {
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Superficie PAPEL con ruido de fotocopia ──────────────── */
+.paper {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--paper-shade);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.32);
+  isolation: isolate;
+}
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+}
+.paper > * { position: relative; z-index: 1; }
+
+/* Perforaciones de archivo al margen izquierdo */
+.perf { padding-left: clamp(28px, 5vw, 54px); }
+.perf::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  z-index: 2;
+  background-image: radial-gradient(circle at center, var(--bg) 0 5px, transparent 6px);
+  background-size: 14px 42px;
+  background-repeat: repeat-y;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+/* ── Sello de goma ─────────────────────────────────────────── */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--seal);
+  border: 1.5px solid var(--seal);
+  padding: 3px 8px;
+  border-radius: 2px;
+  transform: rotate(-4deg);
+  opacity: 0.9;
+}
+
+/* Grapa */
+.staple {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 26px;
+  height: 8px;
+  background: #8a8377;
+  box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.4);
+  transform: rotate(8deg);
+  border-radius: 1px;
+  z-index: 3;
+}
+
+/* ── Duotono de imágenes (tinta; alarma = tinte sello) ─────── */
+.duo {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.duo img { filter: grayscale(1) contrast(1.06) sepia(0.12); }
+.duo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0.12;
+  pointer-events: none;
+}
+.duo.alarm::after { background: var(--seal); opacity: 0.3; }
+
+/* ── GESTO FIRMA: desclasificación por el lector ──────────── */
+.redact {
+  /* Base = desclasificado (accesible / SSR / sin JS / SEO).
+     El componente cliente lo tacha (--reveal:0) al montar si hay JS. */
+  --reveal: 1;
+  position: relative;
+  display: inline;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.redact .redact-bar {
+  position: absolute;
+  inset: -0.05em -0.12em;
+  background: var(--ink);
+  clip-path: inset(0 0 0 calc(var(--reveal) * 100%));
+  transition: clip-path 0.05s linear;
+  z-index: 2;
+}
+.redact .redact-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--reveal) * 100%);
+  width: 3px;
+  background: var(--seal);
+  opacity: 0;
+}
+.redact[data-armed="1"] .redact-bar::after { opacity: 1; }
+
+/* reduced-motion: nunca tachar; contenido siempre legible */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .redact { --reveal: 1; cursor: default; }
+  .paper::before { display: none; }
+}
+
+/* ── Lectura editorial sobre papel ─────────────────────────── */
+.prose-paper {
+  font-family: var(--font-serif);
+  font-size: 1.19rem;
+  line-height: 1.62;
+  color: color-mix(in srgb, var(--ink) 94%, transparent);
+}
+.prose-paper p { margin-bottom: 1.35rem; }
+.prose-paper > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-weight: 700;
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.72;
+  padding: 0.06em 0.1em 0 0;
+  color: var(--seal);
+}
+
+/* View Transitions (progressive enhancement) */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 0.28s; }
 }

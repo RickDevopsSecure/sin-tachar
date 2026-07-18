@@ -1,0 +1,59 @@
+{
+  "site": {
+    "name": "Sin Tachar",
+    "tagline": "What must be shared"
+  },
+  "nav": {
+    "home": "Home",
+    "submit": "Publish",
+    "moderation": "Moderation",
+    "login": "Sign in",
+    "logout": "Sign out"
+  },
+  "home": {
+    "heroLead": "A free space to give visibility to human rights, social injustice, art, music, and safe AI. What was crossed out, here gets uncovered.",
+    "all": "All",
+    "latest": "Latest",
+    "empty": "No posts in this category yet.",
+    "readMore": "Read"
+  },
+  "post": {
+    "by": "By",
+    "back": "← Back",
+    "notFound": "Post not found"
+  },
+  "submit": {
+    "title": "Share a story",
+    "intro": "Your submission is reviewed before it goes live.",
+    "mustLogin": "You need to sign in to publish.",
+    "category": "Category",
+    "coverUrl": "Cover image URL",
+    "titleEs": "Title (Spanish)",
+    "titleEn": "Title (English)",
+    "excerptEs": "Excerpt (Spanish)",
+    "excerptEn": "Excerpt (English)",
+    "bodyEs": "Body (Spanish)",
+    "bodyEn": "Body (English)",
+    "optional": "optional",
+    "send": "Send for review",
+    "success": "Received! Your submission is under review.",
+    "sendAnother": "Send another"
+  },
+  "moderation": {
+    "title": "Moderation queue",
+    "empty": "Nothing pending. All caught up.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "pending": "pending",
+    "staffOnly": "Editors only."
+  },
+  "login": {
+    "title": "Sign in",
+    "intro": "We'll email you a magic link. No passwords.",
+    "email": "Your email",
+    "send": "Send link",
+    "sent": "Check your email. We sent you a link to sign in.",
+    "devHint": "In local dev, open the mailbox:",
+    "error": "Couldn't send the link. Try again."
+  }
+}

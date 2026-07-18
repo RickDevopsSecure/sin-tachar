@@ -1,6 +1,5 @@
 -- Sin Tachar — esquema de producción (pega TODO en Supabase → SQL Editor → Run).
--- Generado de supabase/migrations/*. NO incluye el seed local (usuario admin falso + demo).
--- Tras deploy: entra con tu correo (magic link) y hazte admin con el snippet de DEPLOY.md.
+-- Migraciones concatenadas, sin seed local. Para poblar contenido usa supabase/prod-seed.sql.
 
 -- ============ 20260717000000_init.sql ============
 -- Resonar — schema inicial
@@ -327,3 +326,17 @@ create policy "template-files upload own folder" on storage.objects
   with check (bucket_id = 'template-files' and (storage.foldername(name))[1] = auth.uid()::text);
 create policy "template-files owner delete" on storage.objects
   for delete to authenticated using (bucket_id = 'template-files' and owner = auth.uid());
+
+-- ============ 20260718100000_covers_hardening.sql ============
+-- Endurece el bucket de portadas 'covers': solo imágenes, ≤5MB, subida a la
+-- carpeta propia del usuario (mismo patrón que 'template-files').
+update storage.buckets
+  set file_size_limit = 5000000,
+      allowed_mime_types = array['image/png', 'image/jpeg', 'image/webp', 'image/gif']
+  where id = 'covers';
+
+drop policy if exists "covers authenticated upload" on storage.objects;
+create policy "covers upload own folder" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'covers' and (storage.foldername(name))[1] = auth.uid()::text);
+

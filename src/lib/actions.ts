@@ -17,6 +17,23 @@ function slugify(input: string): string {
   return `${base || "post"}-${suffix}`;
 }
 
+// Detecta el tipo real de imagen por magic bytes (no por el content-type del cliente).
+function detectImage(buf: Uint8Array): { ext: string; mime: string } | null {
+  if (buf.length < 12) return null;
+  if (buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47)
+    return { ext: "png", mime: "image/png" };
+  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff)
+    return { ext: "jpg", mime: "image/jpeg" };
+  if (buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46 && buf[3] === 0x38)
+    return { ext: "gif", mime: "image/gif" };
+  if (
+    buf[0] === 0x52 && buf[1] === 0x49 && buf[2] === 0x46 && buf[3] === 0x46 &&
+    buf[8] === 0x57 && buf[9] === 0x45 && buf[10] === 0x42 && buf[11] === 0x50
+  )
+    return { ext: "webp", mime: "image/webp" };
+  return null;
+}
+
 export async function submitPost(formData: FormData) {
   const locale = (formData.get("locale") as string) || "es";
   const supabase = await createClient();
@@ -29,7 +46,23 @@ export async function submitPost(formData: FormData) {
   const titleEs = (formData.get("title_es") as string)?.trim() || null;
   const titleEn = (formData.get("title_en") as string)?.trim() || null;
   const category = formData.get("category_slug") as string;
-  const cover = (formData.get("cover_image_url") as string)?.trim() || null;
+
+  // Portada: archivo de imagen subido (gana) o URL pegada como alternativa.
+  let cover = (formData.get("cover_image_url") as string)?.trim() || null;
+  const img = formData.get("cover");
+  if (img instanceof File && img.size > 0 && img.size <= 5_000_000) {
+    const buf = new Uint8Array(await img.arrayBuffer());
+    const kind = detectImage(buf);
+    if (kind) {
+      const path = `${user!.id}/${crypto.randomUUID()}.${kind.ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("covers")
+        .upload(path, buf, { contentType: kind.mime });
+      if (!upErr) {
+        cover = supabase.storage.from("covers").getPublicUrl(path).data.publicUrl;
+      }
+    }
+  }
 
   const { error } = await supabase.from("posts").insert({
     author_id: user!.id,

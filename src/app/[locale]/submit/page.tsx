@@ -80,10 +80,20 @@ export default async function SubmitPage({
         </div>
 
         <div>
-          <label className={label}>
-            {t("submit.coverUrl")} <span className="text-muted/50">· {t("submit.optional")}</span>
-          </label>
-          <input name="cover_image_url" type="url" placeholder="https://…" className={field} />
+          <label className={label}>{t("submit.coverImage")}</label>
+          <input
+            name="cover"
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            className="meta block w-full text-muted file:mr-3 file:rounded-[2px] file:border file:border-border file:bg-surface-2 file:px-3 file:py-2 file:text-muted"
+          />
+          <input
+            name="cover_image_url"
+            type="url"
+            placeholder={t("submit.coverOrUrl")}
+            className={`${field} mt-2`}
+          />
+          <p className="meta mt-1 text-muted/60">{t("submit.coverImageHint")}</p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2">

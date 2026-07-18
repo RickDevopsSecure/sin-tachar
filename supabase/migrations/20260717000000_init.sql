@@ -23,7 +23,8 @@ insert into public.categories (slug, name_es, name_en, sort_order) values
   ('injusticia',       'Injusticia social',  'Social justice', 2),
   ('arte',             'Arte',               'Art',            3),
   ('musica',           'Música',             'Music',          4),
-  ('ia-segura',        'IA segura',          'Safe AI',        5);
+  ('videojuegos',      'Videojuegos',        'Video games',    5),
+  ('ia-segura',        'IA segura',          'Safe AI',        6);
 
 -- ─────────────────────────────────────────────────────────────
 -- Perfiles (extiende auth.users)

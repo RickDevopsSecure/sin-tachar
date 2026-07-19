@@ -92,17 +92,14 @@ export async function GET(
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-start",
             alignItems: "center",
             padding: "40px 60px",
             borderTop: "2px solid #d3c7ad",
           }}
         >
           <div style={{ display: "flex", fontSize: 24, letterSpacing: 3, color: "#4a443a" }}>
-            REVISADO · Nº 001
-          </div>
-          <div style={{ display: "flex", fontSize: 24, color: "#b5352a" }}>
-            sin-tachar.vercel.app
+            REVISADO · ARCHIVO COMUNITARIO
           </div>
         </div>
       </div>

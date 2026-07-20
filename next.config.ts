@@ -4,6 +4,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Transiciones de vista entre páginas (la portada "vuela" al artículo).
+  experimental: {
+    viewTransition: true,
+  },
   images: {
     // El Supabase local sirve las portadas desde 127.0.0.1 (IP local).
     // Next 16 bloquea la optimización de IPs locales por defecto.

@@ -92,6 +92,7 @@ export default async function Home({
                 <Link
                   href={`/post/${featured.slug}`}
                   className={`duo relative min-h-64 ${ALARM.has(featured.category_slug) ? "alarm" : ""}`}
+                  style={{ viewTransitionName: `cover-${featured.slug}` }}
                 >
                   <Image
                     src={featured.cover_image_url}

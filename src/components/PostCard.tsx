@@ -21,10 +21,13 @@ export default function PostCard({
   return (
     <Link
       href={`/post/${post.slug}`}
-      className="paper group block transition-transform duration-200 hover:-translate-y-0.5"
+      className="reveal paper group block transition-transform duration-200 hover:-translate-y-0.5"
     >
       {post.cover_image_url && (
-        <div className={`duo aspect-4/3 w-full ${isAlarm ? "alarm" : ""}`}>
+        <div
+          className={`duo aspect-4/3 w-full ${isAlarm ? "alarm" : ""}`}
+          style={{ viewTransitionName: `cover-${post.slug}` }}
+        >
           <Image
             src={post.cover_image_url}
             alt={title}

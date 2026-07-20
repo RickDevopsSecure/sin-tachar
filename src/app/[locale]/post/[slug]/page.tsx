@@ -74,6 +74,7 @@ export default async function PostPage({
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-10">
+      <div className="read-progress" aria-hidden="true" />
       <Link href="/" className="meta text-muted transition-colors hover:text-text">
         {t("post.back")}
       </Link>
@@ -100,6 +101,7 @@ export default async function PostPage({
         {post.cover_image_url && (
           <div
             className={`duo relative mt-8 aspect-video w-full ${ALARM.has(post.category_slug) ? "alarm" : ""}`}
+            style={{ viewTransitionName: `cover-${post.slug}` }}
           >
             <Image
               src={post.cover_image_url}

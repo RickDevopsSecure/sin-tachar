@@ -27,7 +27,7 @@ export default async function Header() {
   const isStaff = role === "editor" || role === "admin";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-bg">
+    <header className="site-header sticky top-0 z-50 border-b border-border bg-bg">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5">
         <Link href="/" className="group flex items-baseline gap-2.5">
           <span className="font-display text-2xl font-bold leading-none tracking-tight text-text">

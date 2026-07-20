@@ -229,8 +229,66 @@ body {
   color: var(--seal);
 }
 
-/* View Transitions (progressive enhancement) */
+/* ── Animaciones (disciplinadas, accesibles) ─────────────────
+   1) View Transitions: la portada "vuela" al artículo (view-transition-name
+      por post) + crossfade de página. El header queda anclado.
+   2) Reveal al entrar en viewport (scroll-driven CSS, con fallback visible).
+   3) Barra de progreso de lectura en el artículo.
+   Todo se apaga con prefers-reduced-motion. */
+
+/* Header anclado durante las transiciones */
+.site-header { view-transition-name: site-header; }
+::view-transition-group(site-header) { animation: none; z-index: 100; }
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; }
+
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 0.28s; }
+  ::view-transition-new(root) { animation-duration: 0.3s; }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 22%;
+    }
+    @keyframes reveal-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .read-progress {
+      animation: read-progress linear;
+      animation-timeline: scroll(root);
+    }
+    @keyframes read-progress {
+      to { transform: scaleX(1); }
+    }
+  }
+}
+
+/* Barra de progreso (base: invisible hasta que la anima el scroll) */
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: var(--seal-bright);
+  z-index: 60;
+}
+
+/* Reduced-motion: sin transiciones de vista ni reveals */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+  .read-progress { display: none; }
 }
